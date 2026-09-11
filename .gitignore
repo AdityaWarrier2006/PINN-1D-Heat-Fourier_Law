@@ -1,0 +1,34 @@
+# Byte-compiled / Python caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Virtual Environments (if created locally)
+venv/
+env/
+.venv/
+
+# DeepXDE & Model Training Outputs
+# (Exclude heavy weight files/logs, keep results/ directory structure)
+*.pth
+*.pt
+*.ckpt
+*.h5
+*.onnx
+*.npy
+*.npz
+events.out.tfevents.*
+
+# Data directory exceptions
+# (Ignore generated outputs, but track original .mat files if needed)
+data/output/
+data/cache/
+
+# OS / Editor specific
+.DS_Store
+.vscode/
+.idea/
