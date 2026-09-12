@@ -37,7 +37,7 @@ def initial_smooth(x):
 
 ic = dde.icbc.IC(geomtime, initial_smooth, lambda _, on_init: on_init)
 
-# 2. Function accepting CLI args as default parameter values
+# Function accepting CLI args as default parameter values
 def build_pinn_data(
     observe_x, 
     observe_u, 
@@ -60,7 +60,7 @@ def build_pinn_data(
     )
     return data
 
-# 3. CLI Entry Point (Only runs when executed as `python define_system.py`)
+# CLI Entry Point (Only runs when executed as `python define_system.py`)
 if __name__ == "__main__":
     observe_x, observe_u, observe_bc = get_data.get_data()
     data = build_pinn_data(observe_x, observe_u)
