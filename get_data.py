@@ -4,6 +4,7 @@ import scipy.io
 import numpy as np
 import pandas as pd
 import urllib.request
+import deepxde as dde
 
 def get_data():
     file_path = '1D_Heat_Synthetic_Data.mat'
