@@ -1,3 +1,4 @@
+%%writefile get_data.py
 import os
 import scipy.io
 import numpy as np
@@ -31,15 +32,15 @@ def get_data():
     df_sampled = df.sample(n=1000, random_state=42)
 
     # extract coordinates (x, t) and corresponding temperature (u_exact)
-
     observe_x = df_sampled[['x', 't']].values
     observe_u = df_sampled[['T']].values
 
     # create a PointSet boundary condition for the inverse problem
-
     observe_bc = dde.PointSetBC(observe_x, observe_u, component=0)
+
+    return observe_x, observe_u, observe_bc
+
 if __name__ == "__main__":
     observe_x, observe_u, observe_bc = get_data()
     print("observe_x shape:", observe_x.shape)
     print("observe_u shape:", observe_u.shape)
-    print("observe_bc:", observe_bc)
