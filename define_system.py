@@ -2,6 +2,7 @@ import argparse
 import tensorflow as tf
 import numpy as np
 import deepxde as dde
+import get_data
 
 # Setup Argument Parser
 parser = argparse.ArgumentParser(description='Initialize points along the system')
@@ -10,10 +11,7 @@ parser.add_argument('--num_boundary', type=int, default=500, help='Number of bou
 parser.add_argument('--num_initial', type=int, default=500, help='Number of initial points')
 parser.add_argument('--training_distribution', type=str, default='Hammersley', help='Training distribution')
 
-# Use parse_known_args() so importing in notebooks/kernels won't raise SystemExit
 args, _ = parser.parse_known_args()
-
-data = define_system.build_pinn_data(observe_x, observe_u)
 
 # PDE setup & Geometry
 def pde(x, y):
@@ -37,18 +35,16 @@ def initial_smooth(x):
 
 ic = dde.icbc.IC(geomtime, initial_smooth, lambda _, on_init: on_init)
 
-# Function accepting CLI args as default parameter values
 def build_pinn_data(
-    observe_x, 
-    observe_u, 
-    geomtime=geomtime, 
-    num_domain=args.num_domain, 
-    num_boundary=args.num_boundary, 
-    num_initial=args.num_initial, 
-    training_distribution=args.training_distribution):
-  
+    observe_x,
+    observe_u,
+    geomtime=geomtime,
+    num_domain=args.num_domain,
+    num_boundary=args.num_boundary,
+    num_initial=args.num_initial,
+    training_distribution=args.training_distribution
+):
     observe_bc = dde.icbc.PointSetBC(observe_x, observe_u, component=0)
-    
     data = dde.data.TimePDE(
         geomtime,
         pde,
@@ -60,7 +56,7 @@ def build_pinn_data(
     )
     return data
 
-# CLI Entry Point (Only runs when executed as `python define_system.py`)
+# Top-level code wrapped to only run when executed directly
 if __name__ == "__main__":
     observe_x, observe_u, observe_bc = get_data.get_data()
     data = build_pinn_data(observe_x, observe_u)
