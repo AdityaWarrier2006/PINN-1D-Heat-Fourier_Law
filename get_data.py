@@ -28,7 +28,7 @@ def get_data():
         'T': T.flatten()
     })
 
-    df_sampled(n=1000, random_state=42)
+    df_sampled = df.sample(n=1000, random_state=42)
 
     # extract coordinates (x, t) and corresponding temperature (u_exact)
 
