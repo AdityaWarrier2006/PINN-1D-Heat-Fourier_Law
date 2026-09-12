@@ -1,3 +1,4 @@
+%%writefile get_data.py
 import os
 import scipy.io
 import numpy as np
@@ -6,7 +7,7 @@ import urllib.request
 
 def get_data():
     file_path = '1D_Heat_Synthetic_Data.mat'
-    
+
     if not os.path.isfile(file_path):
         print("Did not find", file_path)
         url = "https://github.com/AdityaWarrier2006/PINN-1D-Heat-Fourier_Law/raw/refs/heads/main/1D_Heat_Synthetic_Data.mat"
@@ -27,9 +28,18 @@ def get_data():
         'T': T.flatten()
     })
 
-    return df.sample(n=1000, random_state=42)
+    # extract coordinates (x, t) and corresponding temperature (u_exact)
 
+    observe_x = df_sampled[['x', 't']].values
+    observe_u = df_sampled[['T']].values
+
+    # create a PointSet boundary condition for the inverse problem
+
+    observe_bc = dde.PointSetBC(observe_x, observe_u, component=0)
+
+    return df.sample(n=1000, random_state=42)
 if __name__ == "__main__":
-    df_sampled = get_data()
-    print(df_sampled.head())
-    print(df_sampled.shape)
+    observe_x, observe_u, observe_bc = get_data()
+    print("observe_x shape:", observe_x.shape)
+    print("observe_u shape:", observe_u.shape)
+    print("observe_bc:", observe_bc)
