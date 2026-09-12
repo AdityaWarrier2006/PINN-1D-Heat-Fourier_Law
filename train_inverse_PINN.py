@@ -3,6 +3,9 @@ import deepxde as dde
 import tensorflow as tf
 import define_system
 import get_data
+import os
+
+os.makedirs("models", exist_ok=True)
 
 def train_inverse_pinn(
     data,
