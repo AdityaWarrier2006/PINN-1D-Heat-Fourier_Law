@@ -1,4 +1,3 @@
-%%writefile get_data.py
 import os
 import scipy.io
 import numpy as np
